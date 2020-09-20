@@ -9,7 +9,7 @@ import Login from "./Login";
 const s = new SpotifyWebApi();
 
 function App() {
-  const [{ token }, dispatch] = useStateValue();
+  const [{ token, discover_weekly, tracks_with_audio_features, discover_weekly_ids }, dispatch] = useStateValue();
 
   useEffect(() => {
     // Set token
@@ -25,10 +25,17 @@ function App() {
         token: _token,
       });
 
-      s.getPlaylist("37i9dQZEVXcJZyENOWUFo7").then((response) =>
+      s.getPlaylist("7eAUZgFUXhSELkXIpSbFiu").then((response) =>
         dispatch({
           type: "SET_DISCOVER_WEEKLY",
           discover_weekly: response,
+        })
+      );
+
+      s.getAudioFeaturesForTracks(discover_weekly_ids).then((response) =>
+        dispatch({
+          type: "SET_TRACKS_WITH_AUDIO_FEATURES",
+          tracks_with_audio_features: response,
         })
       );
 

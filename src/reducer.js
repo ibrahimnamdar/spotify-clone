@@ -5,13 +5,15 @@ export const initialState = {
   playlists: [],
   spotify: null,
   discover_weekly: null,
+  discover_weekly_ids: null,
+  tracks_with_audio_features: null,
   top_artists: null,
   playing: false,
   item: null,
 };
 
 const reducer = (state, action) => {
-  console.log(action);
+
   switch (action.type) {
     case "SET_USER":
       return {
@@ -35,6 +37,13 @@ const reducer = (state, action) => {
       return {
         ...state,
         discover_weekly: action.discover_weekly,
+        discover_weekly_ids: action.discover_weekly.tracks.items.map((e) => { return e.track.id }).join(',')
+      };
+
+    case "SET_TRACKS_WITH_AUDIO_FEATURES":
+      return {
+        ...state,
+        tracks_with_audio_features: action.tracks_with_audio_features,
       };
 
     case "SET_TOP_ARTISTS":
